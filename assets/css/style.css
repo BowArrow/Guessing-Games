@@ -1,0 +1,55 @@
+body {
+    background-image: url(../images/Retro.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Righteous', cursive, sans-serif;
+}
+
+
+#Afterlight{
+    max-width: 100%;
+}
+
+.border-pink {
+    border-color: #f8362a;
+}
+
+.nav-tabs .nav-link.active{
+    background-color: #7b04b4;
+    border-color: #7b04b4;
+    border-bottom-color: #f8362a;
+    color: #f8362a;
+}
+
+.text-retro{
+    color: #d51aa5;
+}
+
+a {
+    color: #d51aa5
+}
+
+.opacity {
+    opacity: 0.9;
+}
+
+.opreset {
+    opacity: none;
+}
+
+.bg-black {
+    background-color: black;
+}
+
+footer{
+    height: auto;
+    margin-top: 200px;
+}
+
+#game-container {
+    height: 500px;
+    text-align: center;
+    opacity: none;
+}
