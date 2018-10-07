@@ -67,46 +67,53 @@ function update() {
     losesDoc.textContent = "Losses: " + lose.toString();
 }
 
-
+console.log(word);
 document.onkeyup = function (event) {
     var userInput = event.key.toLowerCase();
-    if (userInput) {
-        letterGuess--;
-        guesses.textContent = "Guesses Left: " + letterGuess.toString();
-        var letterDiv = document.createElement("div");
-        letterDiv.setAttribute("class", "float-left mx-2 center-text");
-        letterDiv.textContent = userInput.toString() + " ";
-        letterDisplay.appendChild(letterDiv);
-    }
+    var keys = event.keyCode;
+    if (letterGuess != 0 && wordGuess.textContent !== "YOU WIN!" && keys >= 65 && keys <= 90 || key == 8){
 
-    for (var j = 0; j < word.length; j++) {
-        if (letterGuess === 0) {
-            wordGuess.textContent = "You lose";
-            loseSound.play();
-            setTimeout(function () {
-                reset();
-            }, 2000);
-        } else if (word.split("")[j] == userInput) {
-            guessArray[j] = userInput;
-            wordGuess.textContent = guessArray.join(" ");
-            if (word === guessArray.join("")) {
-                wordGuess.textContent = "YOU WIN!";
-                winSound.play();
+        if (userInput) {
+            letterGuess--;
+            if (letterGuess < 0){
+                    letterGuess = 0;
+                };
+            guesses.textContent = "Guesses Left: " + letterGuess.toString();
+            var letterDiv = document.createElement("div");
+            letterDiv.setAttribute("class", "float-left mx-2 center-text");
+            letterDiv.textContent = userInput.toString() + " ";
+            letterDisplay.appendChild(letterDiv);
+        }
+    
+        for (var j = 0; j < word.length; j++) {
+             if (word.split("")[j] == userInput) {
+                guessArray[j] = userInput;
+                wordGuess.textContent = guessArray.join(" ");
+                if (word === guessArray.join("")) {
+                    wordGuess.textContent = "YOU WIN!";
+                    winSound.play();
+                    setTimeout(function () {
+                        reset();
+                    }, 2000);
+                };
+            } else if (letterGuess === 0) {
+                wordGuess.textContent = "You lose";
+                loseSound.play();
                 setTimeout(function () {
                     reset();
                 }, 2000);
-            };
         };
+    
+        
+        
     };
-
-    if (wordGuess.textContent == "You lose") {
-        lose++;
-        update();
-    } else if (wordGuess.textContent == "YOU WIN!") {
-        wins++;
-        update();
+            if (wordGuess.textContent === "You lose") {
+                    lose++;
+                    update();
+    
+            } else if (wordGuess.textContent === "YOU WIN!") {
+                    wins++;
+                    update();
+            };
     };
-
-
-
 };
