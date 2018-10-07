@@ -64,7 +64,7 @@ function reset() {
 
 function update() {
     winsDoc.textContent = "Wins: " + wins.toString();
-    losesDoc.textContent = "Loses: " + lose.toString();
+    losesDoc.textContent = "Losses: " + lose.toString();
 }
 
 
