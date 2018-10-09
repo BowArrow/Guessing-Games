@@ -47,7 +47,7 @@ var winsDoc = document.getElementById("wins");
 var losesDoc = document.getElementById("loses");
 var wins = 0;
 var lose = 0;
-var letterGuess = 10;
+var letterGuess = 6;
 guesses.textContent = "Guesses Left: " + letterGuess.toString();
 var letterDisplay = document.getElementById("letter-guess");
 function reset() {
@@ -59,7 +59,7 @@ function reset() {
     };
     guessedWord = guessArray.join(" ");
     wordGuess.textContent = guessedWord;
-    letterGuess = 10;
+    letterGuess = 6;
     guesses.textContent = "Guesses Left: " + letterGuess.toString();
     letterDisplay.innerHTML = "";
     console.log(word);
