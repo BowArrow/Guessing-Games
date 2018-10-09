@@ -35,8 +35,8 @@ function randWord (){
 randWord()
 var gameObj = {
     sounds: {
-        winSound: document.getElementById("win-sound"),
-        loseSound: document.getElementById("lose-sound")
+        win: document.getElementById("win-sound"),
+        lose: document.getElementById("lose-sound")
     },
     elements: {
         wordGuess: document.getElementById("word-guess"),
@@ -46,16 +46,22 @@ var gameObj = {
         letterDisplay: document.getElementById("letter-guess")
     },
     score: {
-        wins: 0,
+        win: 0,
         lose: 0,
         letterGuess: 6
     },
     array: {
         guessArray: [],
         guessedLetters: []
+    },
+    string: {
+        win: "YOU WIN!",
+        lose: "You lose"
     }
+
 }
 
+var string = gameObj.string;
 var array = gameObj.array;
 var score = gameObj.score;
 var sound = gameObj.sounds;
@@ -85,7 +91,7 @@ function reset() {
 };
 
 function update() {
-    element.winsDoc.textContent = "Wins: " + score.wins.toString();
+    element.winsDoc.textContent = "Wins: " + score.win.toString();
     element.losesDoc.textContent = "Losses: " + score.lose.toString();
     element.guesses.textContent = "Guesses Left: " + score.letterGuess.toString();
 }
@@ -96,7 +102,7 @@ document.onkeyup = function (event) {
     var keys = event.keyCode;
     var wordArray = word.split("");
 
-    if (score.letterGuess != 0 && element.wordGuess.textContent !== "YOU WIN!" && keys >= 65 && keys <= 90 || key == 8) {
+    if (score.letterGuess != 0 && element.wordGuess.textContent !== "YOU WIN!" && keys >= 65 && keys <= 90 || keys == 8) {
         if (array.guessedLetters.indexOf(userInput) === -1) {
             array.guessedLetters.push(userInput);
             var letterDiv = document.createElement("div");
@@ -121,23 +127,21 @@ document.onkeyup = function (event) {
                 element.wordGuess.textContent = array.guessArray.join(" ");
             };
         };
+        
+        function final(any) {
+            element.wordGuess.textContent = string[any];
+            sound[any].play();
+            score[any]++
+            update();
+            setTimeout(function () {
+                reset();
+            }, 2000);
+        }
 
         if (word === array.guessArray.join("")) {
-            element.wordGuess.textContent = "YOU WIN!";
-            sound.winSound.play();
-            score.wins++;
-            update();
-            setTimeout(function () {
-                reset();
-            }, 2000);
+            final('win');
         } else if (score.letterGuess === 0) {
-            element.wordGuess.textContent = "You lose";
-            sound.loseSound.play();
-            score.lose++;
-            update();
-            setTimeout(function () {
-                reset();
-            }, 2000);
+            final('lose');
         };
     };
 
