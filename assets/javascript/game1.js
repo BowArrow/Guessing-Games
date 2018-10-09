@@ -28,94 +28,112 @@ var words = [
 ];
 
 
-// var randWord = words[Math.floor(Math.random() * words.length)];
-var word = words[Math.floor(Math.random() * words.length)];
+// var randWord (){} = words[Math.floor(Math.random() * words.length)];
+function randWord (){
+    word = words[Math.floor(Math.random() * words.length)];
+}
+randWord()
+var gameObj = {
+    sounds: {
+        winSound: document.getElementById("win-sound"),
+        loseSound: document.getElementById("lose-sound")
+    },
+    elements: {
+        wordGuess: document.getElementById("word-guess"),
+        guesses: document.getElementById("number-guess"),
+        winsDoc: document.getElementById("wins"),
+        losesDoc: document.getElementById("loses"),
+        letterDisplay: document.getElementById("letter-guess")
+    },
+    score: {
+        wins: 0,
+        lose: 0,
+        letterGuess: 6
+    },
+    array: {
+        guessArray: [],
+        guessedLetters: []
+    }
+}
 
+var array = gameObj.array;
+var score = gameObj.score;
+var sound = gameObj.sounds;
+var element = gameObj.elements;
 
-var guessArray = [];
 for (var i = 0; i < word.length; i++) {
-    guessArray[i] = "_";
+    array.guessArray[i] = "_";
 };
 
-var winSound = document.getElementById("win-sound");
-var loseSound = document.getElementById("lose-sound");
-var guessedWord = guessArray.join(" ");
-var wordGuess = document.getElementById("word-guess");
-wordGuess.textContent = guessedWord;
-var guesses = document.getElementById("number-guess");
-var winsDoc = document.getElementById("wins");
-var losesDoc = document.getElementById("loses");
-var wins = 0;
-var lose = 0;
-var letterGuess = 6;
-guesses.textContent = "Guesses Left: " + letterGuess.toString();
-var letterDisplay = document.getElementById("letter-guess");
+var guessedWord = array.guessArray.join(" ");
+element.wordGuess.textContent = guessedWord;
+
+element.guesses.textContent = "Guesses Left: " + score.letterGuess.toString();
 function reset() {
-    word = words[Math.floor(Math.random() * words.length)];
-    guessArray = [];
-    guessedLetters = [];
+    randWord();
+    array.guessArray = [];
+    array.guessedLetters = [];
     for (var i = 0; i < word.length; i++) {
-        guessArray[i] = "_";
+        array.guessArray[i] = "_";
     };
-    guessedWord = guessArray.join(" ");
-    wordGuess.textContent = guessedWord;
-    letterGuess = 6;
-    guesses.textContent = "Guesses Left: " + letterGuess.toString();
-    letterDisplay.innerHTML = "";
+    guessedWord = array.guessArray.join(" ");
+    element.wordGuess.textContent = guessedWord;
+    score.letterGuess = 6;
+    element.guesses.textContent = "Guesses Left: " + score.letterGuess.toString();
+    element.letterDisplay.innerHTML = "";
     console.log(word);
 };
 
 function update() {
-    winsDoc.textContent = "Wins: " + wins.toString();
-    losesDoc.textContent = "Losses: " + lose.toString();
-    guesses.textContent = "Guesses Left: " + letterGuess.toString();
+    element.winsDoc.textContent = "Wins: " + score.wins.toString();
+    element.losesDoc.textContent = "Losses: " + score.lose.toString();
+    element.guesses.textContent = "Guesses Left: " + score.letterGuess.toString();
 }
 
-var guessedLetters = [];
 console.log(word);
 document.onkeyup = function (event) {
     var userInput = event.key.toLowerCase();
     var keys = event.keyCode;
     var wordArray = word.split("");
-    
-    if (letterGuess != 0 && wordGuess.textContent !== "YOU WIN!" && keys >= 65 && keys <= 90 || key == 8){
-        if (guessedLetters.indexOf(userInput) === -1) {
-            guessedLetters.push(userInput);
+
+    if (score.letterGuess != 0 && element.wordGuess.textContent !== "YOU WIN!" && keys >= 65 && keys <= 90 || key == 8) {
+        if (array.guessedLetters.indexOf(userInput) === -1) {
+            array.guessedLetters.push(userInput);
             var letterDiv = document.createElement("div");
             letterDiv.setAttribute("class", "float-left mx-2 center-text letterDiv");
             letterDiv.textContent = userInput.toString() + " ";
-            letterDisplay.appendChild(letterDiv);
-            if (letterGuess < 0){
-                    letterGuess = 0;
+            element.letterDisplay.appendChild(letterDiv);
+            if (score.letterGuess < 0) {
+                score.letterGuess = 0;
             };
-            if(wordArray.indexOf(userInput) === -1){
-                letterGuess--;
+            if (wordArray.indexOf(userInput) === -1) {
+                score.letterGuess--;
             };
             update();
-            console.log(guessedLetters);
+            console.log(array.guessedLetters);
         }
-    
-        
-  
+
+
+
         for (var j = 0; j < word.length; j++) {
             if (wordArray[j] == userInput) {
-                guessArray[j] = userInput;
-                wordGuess.textContent = guessArray.join(" ");
-            };    
+                array.guessArray[j] = userInput;
+                element.wordGuess.textContent = array.guessArray.join(" ");
+            };
         };
 
-        if (word === guessArray.join("")) {
-            wordGuess.textContent = "YOU WIN!";
-            winSound.play();
-            wins++;
+        if (word === array.guessArray.join("")) {
+            element.wordGuess.textContent = "YOU WIN!";
+            sound.winSound.play();
+            score.wins++;
             update();
             setTimeout(function () {
                 reset();
             }, 2000);
-        } else if (letterGuess === 0) {
-            wordGuess.textContent = "You lose";
-            loseSound.play();
-            lose++;
+        } else if (score.letterGuess === 0) {
+            element.wordGuess.textContent = "You lose";
+            sound.loseSound.play();
+            score.lose++;
             update();
             setTimeout(function () {
                 reset();
