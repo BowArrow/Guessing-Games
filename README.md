@@ -5,6 +5,9 @@ This was one of the first apps I created, it's a game where you try to guess eac
 ## How to play
 Simply press the letter you want on the keyboard and try to guess the word.
 
+## Deployed Link
+https://bowarrow.github.io/Guessing-Games/
+
 ## Technologies Used
 * HTML
 * Bootstrap
